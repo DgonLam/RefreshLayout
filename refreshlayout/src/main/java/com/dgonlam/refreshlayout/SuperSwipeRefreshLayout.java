@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -117,6 +118,8 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
 
     private int mHeaderViewHeight;
 
+    private int mHeaderContainerHeight; //头布局高度
+
     private int mFooterViewHeight;
 
     private boolean mUsingCustomStart;
@@ -201,6 +204,7 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
         }
         usingDefaultHeader = false;
         mHeadViewContainer.removeAllViews();
+        Log.d("long","child height:"+child.getHeight());
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                 mHeaderViewWidth, mHeaderViewHeight);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -251,7 +255,10 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
         final DisplayMetrics metrics = getResources().getDisplayMetrics();
         mHeaderViewWidth = (int) display.getWidth();
         mFooterViewWidth = (int) display.getWidth();
-        mHeaderViewHeight = (int) (HEADER_VIEW_HEIGHT * metrics.density);
+        TypedArray typeArray = context.getTheme().obtainStyledAttributes(attrs,
+                R.styleable.SuperSwipeRefreshLayout, 0, 0);
+        mHeaderViewHeight = (int) typeArray.getDimension(R.styleable.SuperSwipeRefreshLayout_headViewHeight, (int) (HEADER_VIEW_HEIGHT * metrics.density));
+        mHeaderContainerHeight = (int) typeArray.getDimension(R.styleable.SuperSwipeRefreshLayout_headViewContainerHeight,3* mHeaderViewHeight);
         mFooterViewHeight = (int) (HEADER_VIEW_HEIGHT * metrics.density);
         defaultProgressView = new CircleProgressView(getContext());
         createHeaderViewContainer();
@@ -509,7 +516,7 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
                         MeasureSpec.EXACTLY));
         mHeadViewContainer.measure(MeasureSpec.makeMeasureSpec(
                 mHeaderViewWidth, MeasureSpec.EXACTLY), MeasureSpec
-                .makeMeasureSpec(3 * mHeaderViewHeight, MeasureSpec.EXACTLY));
+                .makeMeasureSpec(mHeaderContainerHeight, MeasureSpec.EXACTLY));
         mFooterViewContainer.measure(MeasureSpec.makeMeasureSpec(
                 mFooterViewWidth, MeasureSpec.EXACTLY), MeasureSpec
                 .makeMeasureSpec(mFooterViewHeight, MeasureSpec.EXACTLY));

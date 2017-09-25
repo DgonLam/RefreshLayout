@@ -1,0 +1,8 @@
+<resources>
+
+    <declare-styleable name="SuperSwipeRefreshLayout">
+        <attr name="headViewContainerHeight" format="dimension"/>
+        <attr name="headViewHeight" format="dimension"/>
+        <!--<attr name="headViewContainerBackground" format="color"/>-->
+    </declare-styleable>
+</resources>
