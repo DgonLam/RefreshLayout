@@ -204,7 +204,6 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
         }
         usingDefaultHeader = false;
         mHeadViewContainer.removeAllViews();
-        Log.d("long","child height:"+child.getHeight());
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                 mHeaderViewWidth, mHeaderViewHeight);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
